@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
+import os
 
-app = Flask(__name__)
+# Set the template directory to the current directory
+template_dir = os.path.abspath(os.path.dirname(__file__))
+app = Flask(__name__, template_folder=template_dir)
 
 # Signal map with (Signal, Success %)
 signal_map = {
@@ -16,7 +19,7 @@ signal_map = {
     "Blue Cross": ("Buy", 65),
     "Green Vol Dec.": ("Sell", 50),
     "Red Cross": ("Sell", 65),
-    "Neutral": ("Hold",40)
+    "Neutral": ("Hold", 40)
 }
 
 @app.route('/', methods=['GET', 'POST'])
@@ -58,7 +61,7 @@ def index():
         total1 = 0
         for signal, percent in all_percentages:
             if signal == "Hold":
-                total1 += percent/2
+                total1 += percent / 2
                 total += percent
             elif dominant_signal and signal != dominant_signal:
                 deductions += percent
@@ -66,10 +69,9 @@ def index():
             else:
                 total += percent
                 total1 += percent
-        sum = total + deductions
-    
-        final_success = round(max(((total1 - deductions1) / sum) * 100, 0), 2)
+        sum_val = total + deductions
 
+        final_success = round(max(((total1 - deductions1) / sum_val) * 100, 0), 2)
         final_signal = dominant_signal if dominant_signal else "Neutral"
 
     return render_template('index.html', signal=final_signal, success=final_success, selections=selections)
