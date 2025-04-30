@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading Signal Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .result h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align:center;">Calculate Success Percentage of a Trade</h1>
+
+    <form method="POST">
+        <table border="1" cellpadding="10" cellspacing="0" style="width:100%; text-align:center;">
+            <thead>
+                <tr>
+                    <th rowspan="2">S.no</th>
+                    <th rowspan="2">Parameter</th>
+                    <th rowspan="2">Value</th>
+                    <th rowspan="2">Select(✓)</th>
+                    <th rowspan="2">Success %</th>
+                    <th rowspan="2">Signal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1. Price At -->
+                <tr>
+                    <td rowspan="3"><strong>1.</strong></td>
+                    <td rowspan="3"><strong>Price At</strong></td>
+                    <td>Resistance</td>
+                    <td><input type="radio" name="price_at" value="Resistance" {% if selections.get('price_at') == 'Resistance' %}checked{% endif %}></td>
+                    <td>60%</td>
+                    <td>{% if selections.get('price_at') == 'Resistance' %}Sell{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Support</td>
+                    <td><input type="radio" name="price_at" value="Support" {% if selections.get('price_at') == 'Support' %}checked{% endif %}></td>
+                    <td>60%</td>
+                    <td>{% if selections.get('price_at') == 'Support' %}Buy{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>None</td>
+                    <td><input type="radio" name="price_at" value="None" {% if selections.get('price_at') == 'None' %}checked{% endif %}></td>
+                    <td>10%</td>
+                    <td>{% if selections.get('price_at') == 'None' %}Hold{% endif %}</td>
+                </tr>
+
+                <!-- 2. Trend -->
+                <tr>
+                    <td rowspan="2"><strong>2.</strong></td>
+                    <td rowspan="2"><strong>Trend</strong></td>
+                    <td>Green</td>
+                    <td><input type="radio" name="trend" value="Green" {% if selections.get('trend') == 'Green' %}checked{% endif %}></td>
+                    <td>70%</td>
+                    <td>{% if selections.get('trend') == 'Green' %}Buy{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Red</td>
+                    <td><input type="radio" name="trend" value="Red" {% if selections.get('trend') == 'Red' %}checked{% endif %}></td>
+                    <td>70%</td>
+                    <td>{% if selections.get('trend') == 'Red' %}Sell{% endif %}</td>
+                </tr>
+
+                <!-- 3. RSI -->
+                <tr>
+                    <td rowspan="3"><strong>3.</strong></td>
+                    <td rowspan="3"><strong>RSI</strong></td>
+                    <td>Above 60</td>
+                    <td><input type="radio" name="rsi" value="Above 60" {% if selections.get('rsi') == 'Above 60' %}checked{% endif %}></td>
+                    <td>55%</td>
+                    <td>{% if selections.get('rsi') == 'Above 60' %}Sell{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>B/w 40 – 60</td>
+                    <td><input type="radio" name="rsi" value="B/w 40 – 60" {% if selections.get('rsi') == 'B/w 40 – 60' %}checked{% endif %}></td>
+                    <td>40%</td>
+                    <td>{% if selections.get('rsi') == 'B/w 40 – 60' %}Hold{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Below 40</td>
+                    <td><input type="radio" name="rsi" value="Below 40" {% if selections.get('rsi') == 'Below 40' %}checked{% endif %}></td>
+                    <td>55%</td>
+                    <td>{% if selections.get('rsi') == 'Below 40' %}Buy{% endif %}</td>
+                </tr>
+
+                <!-- 4. MACD -->
+                <tr>
+                    <td rowspan="5"><strong>4.</strong></td>
+                    <td rowspan="5"><strong>MACD</strong></td>
+                    <td>Red Vol Dec.</td>
+                    <td><input type="radio" name="macd" value="Red Vol Dec." {% if selections.get('macd') == 'Red Vol Dec.' %}checked{% endif %}></td>
+                    <td>50%</td>
+                    <td>{% if selections.get('macd') == 'Red Vol Dec.' %}Buy{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Blue Cross</td>
+                    <td><input type="radio" name="macd" value="Blue Cross" {% if selections.get('macd') == 'Blue Cross' %}checked{% endif %}></td>
+                    <td>65%</td>
+                    <td>{% if selections.get('macd') == 'Blue Cross' %}Buy{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Green Vol Dec.</td>
+                    <td><input type="radio" name="macd" value="Green Vol Dec." {% if selections.get('macd') == 'Green Vol Dec.' %}checked{% endif %}></td>
+                    <td>50%</td>
+                    <td>{% if selections.get('macd') == 'Green Vol Dec.' %}Sell{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Red Cross</td>
+                    <td><input type="radio" name="macd" value="Red Cross" {% if selections.get('macd') == 'Red Cross' %}checked{% endif %}></td>
+                    <td>65%</td>
+                    <td>{% if selections.get('macd') == 'Red Cross' %}Sell{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Neutral</td>
+                    <td><input type="radio" name="macd" value="Neutral" {% if selections.get('macd') == 'Neutral' %}checked{% endif %}></td>
+                    <td>40%</td>
+                    <td>{% if selections.get('macd') == 'Neutral' %}Hold{% endif %}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <div style="text-align:center; margin-top:20px;">
+            <button type="submit" class="btn">Get Signal</button>
+        </div>
+    </form>
+
+    {% if signal %}
+        <div class="result" style="margin-top:20px; text-align:center;">
+            <h3>Final Signal: {{ signal }}</h3>
+            <h3>Success Percentage: {{ success }}%</h3>
+        </div>
+    {% endif %}
+
+</body>
+</html>
